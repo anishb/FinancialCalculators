@@ -6,7 +6,7 @@ function InterestCalculator(principal, rate) {
 	var that = this;
 
 	this.ratePerCompound = function() {
-		return Math.pow((1 + that.nominalRate), (1 / that.numCompoundsPerYear)) - 1;
+		return this.nominalRate / this.numCompoundsPerYear;
 	}
 
 	this.amountAfterYear = function(year) {
