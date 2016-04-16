@@ -19,11 +19,13 @@ function RentOrBuyCalculator() {
 
 	var mortgageCalculator;
 	var sellingClosingRate = 0.06;
+	var cashWhileRenting;
 
-	this.start = function() {
+	this.setup = function() {
 		var mortgageAmount = that.purchasePrice - that.downPayment;
 		mortgageCalculator = new FixedMortgageCalculator(mortgageAmount, this.mortgageTerm,
 			this.mortgageRate);
+		cashWhileRenting = new Array(that.mortgageTerm * 12);
 	};
 
 	/* Owning scenario */
@@ -36,24 +38,24 @@ function RentOrBuyCalculator() {
 	};
 
 	this.insurance = function(month) {
-		return (that.annualInsurance / 12.0) * Math.pow(that.inflationRate, Math.floor(month / 2));
+		return that.annualInsurance / 12.0 * Math.pow(1 + that.inflationRate, Math.floor(month / 12));
 	};
 
 	this.hoaFees = function(month) {
-		return that.monthlyHOAFees * Math.pow(that.inflationRate, Math.floor(month / 12));
+		return that.monthlyHOAFees * Math.pow(1 + that.inflationRate, Math.floor(month / 12));
 	};
 
 	this.maintenance = function(month) {
-		return that.annualMaintenance * Math.pow(that.inflationRate, Math.floor(month / 12));
+		return that.annualMaintenance / 12.0 * Math.pow(1 + that.inflationRate, Math.floor(month / 12));
 	};
 
 	this.propertyTax = function(month) {
-		return that.homeValue(month) * that.propertyTaxRate / 12;
+		return that.homeValue(month - 1) * that.propertyTaxRate / 12;
 	};
 
 	this.incomeTaxSavings = function(month) {
 		var deductible = mortgageCalculator.interestPayment(month) + that.propertyTax(month);
-		if (isHOATaxDeductible) {
+		if (that.isHOATaxDeductible) {
 			deductible += that.hoaFees(month);
 		}
 		return deductible * that.marginalTaxRate;
@@ -61,17 +63,17 @@ function RentOrBuyCalculator() {
 
 	this.totalExpenseForHome = function(month) {
 		return mortgageCalculator.monthlyPayment() + that.insurance(month) + that.hoaFees(month)
-			+ that.maintenance(month) + that.propertyTax(month) - incomeTaxSavings(month);
+			+ that.maintenance(month) + that.propertyTax(month) - that.incomeTaxSavings(month);
 	};
 
 	this.cashAfterSellingHome = function(month) {
-		return that.homeValue(month) * (1 - that.sellingClosingRate)
+		return that.homeValue(month) * (1 - sellingClosingRate)
 			- mortgageCalculator.balance(month);
 	};
 
 	/* Renting scenario */
 	this.rent = function(month) {
-		return that.monthlyRent * Math.pow(that.inflationRate, Math.floor(month / 12));
+		return that.monthlyRent * Math.pow(1 + that.inflationRate, Math.floor(month / 12));
 	};
 
 	this.savingsFromRenting = function(month) {
@@ -79,8 +81,15 @@ function RentOrBuyCalculator() {
 	};
 
 	this.cashWhenRenting = function(month) {
-		return that.downPayment * Math.pow(1 + that.investmentReturnRate / 12, month)
+		if (month == 0) {
+			return that.downPayment;
+		}
+		if (cashWhileRenting[month]) {
+			return cashWhileRenting[month];
+		}
+		cashWhileRenting[month] = that.cashWhenRenting(month - 1) * (1 + that.investmentReturnRate / 12)
 			+ that.savingsFromRenting(month);
+		return cashWhileRenting[month];
 	};
 
 	/* Find month when owning is better than renting */
