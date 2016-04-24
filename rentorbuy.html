@@ -11,25 +11,25 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row">
-				<form role="form">
+				<form role="form" data-toggle="validator">
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="purchase-price">Purchase price: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" class="form-control" id="purchase-price">
+						<input type="number" min="0" step="any" class="form-control" id="purchase-price" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="down-payment">Down Payment: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" class="form-control" id="down-payment">
+						<input type="number" min="0" step="any" class="form-control" id="down-payment" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="mortgage-rate">Mortgage Interest Rate: </label>
 					<div class="input-group">
-						<input type="number" class="form-control" id="mortgage-rate" value="4.5">
+						<input type="number" min="0" step="any" class="form-control" id="mortgage-rate" value="4.5" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="property-tax-rate">Property Tax Rate: </label>
 					<div class="input-group">
-						<input type="number" class="form-control" id="property-tax-rate" value="1.25">
+						<input type="number" min="0" step="any" class="form-control" id="property-tax-rate" value="1.25" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
@@ -52,20 +52,20 @@
 					<label for="monthly-hoa">Monthly HOA fees: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" class="form-control" id="monthly-hoa">
+						<input type="number" min="0" step="any" class="form-control" id="monthly-hoa" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="annual-insurance">Annual Insurance: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" class="form-control" id="annual-insurance">
+						<input type="number" min="0" step="any" class="form-control" id="annual-insurance" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="appreciation-rate">Estimated Annual Appreciation Rate: </label>
 					<div class="input-group">
-						<input type="number" class="form-control" id="appreciation-rate" value="2">
+						<input type="number" min="0" step="any" class="form-control" id="appreciation-rate" value="2" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
@@ -73,20 +73,20 @@
 					<label for="annual-maintenance">Annual maintenance: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" class="form-control" id="annual-maintenance">
+						<input type="number" min="0" step="any" class="form-control" id="annual-maintenance" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="inflation-rate">Annual Inflation Rate: </label>
 					<div class="input-group">
-						<input type="number" class="form-control" id="inlfation-rate" value="2">
+						<input type="number" min="0" step="any" class="form-control" id="inlfation-rate" value="2" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="tax-rate">Marginal Tax Rate: </label>
 					<div class="input-group">
-						<input type="number" class="form-control" id="tax" value="28">
+						<input type="number" min="0" step="any" class="form-control" id="tax" value="28" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
@@ -94,20 +94,20 @@
 					<label for="rent">Monthly Rent: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" class="form-control" id="rent">
+						<input type="number" min="0" step="any" class="form-control" id="rent" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="rent-inflation">Annual Rent Inflation: </label>
 					<div class="input-group">
-						<input type="number" class="form-control" id="rent-inflation" value="3">
+						<input type="number" min="0" step="any" class="form-control" id="rent-inflation" value="3" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="investment-rate">Investment Return Rate (after taxes): </label>
 					<div class="input-group">
-						<input type="number" class="form-control" id="investment-rate" value="5">
+						<input type="number" min="0" class="form-control" id="investment-rate" value="5" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
@@ -122,5 +122,6 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<script src="js/lib/validator.min.js"></script>
 	</body>
 </html>
