@@ -10,8 +10,8 @@
 
 	<body>
 		<div class="container-fluid">
-			<div class="row">
-				<form role="form" data-toggle="validator">
+			<div class="row" id="financial-variables">
+				<form role="form" data-toggle="validator" id="input-form">
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="purchase-price">Purchase price: </label>
 					<div class="input-group">
@@ -79,14 +79,14 @@
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="inflation-rate">Annual Inflation Rate: </label>
 					<div class="input-group">
-						<input type="number" min="0" step="any" class="form-control" id="inlfation-rate" value="2" required>
+						<input type="number" min="0" step="any" class="form-control" id="inflation-rate" value="2" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="tax-rate">Marginal Tax Rate: </label>
 					<div class="input-group">
-						<input type="number" min="0" step="any" class="form-control" id="tax" value="28" required>
+						<input type="number" min="0" step="any" class="form-control" id="tax-rate" value="28" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
@@ -116,6 +116,14 @@
 				</div>
 			</form>
 			</div>
+			<div class="row" id="results-section" style="display: none;">
+				<div class="col-xs-12">
+					<div class="jumbotron">
+						<p id="advice-text"></p>
+					</div>
+					<button class="btn btn-default" id="show-form">Options</button>
+				</div>
+			</row>
 
 		</div>
 
@@ -123,5 +131,53 @@
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<script src="js/lib/validator.min.js"></script>
+		<script src="js/src/FixedMortgageCalculator.js"></script>
+		<script src="js/src/RentOrBuyCalculator.js"></script>
+		<script>
+		$(document).ready(function() {
+			var calculator = new RentOrBuyCalculator();
+
+			function calculate() {
+				calculator.purchasePrice = Number($('#purchase-price').val());
+				calculator.downPayment = Number($('#down-payment').val());
+				calculator.mortgageRate = $('#mortgage-rate').val() / 100;
+				calculator.mortgageTerm = Number($('#mortgage-term').val());
+				calculator.propertyTaxRate = $('#property-tax-rate').val() / 100;
+				calculator.monthlyHOAFees = Number($('#monthly-hoa').val());
+				calculator.annualInsurance = Number($('#annual-insurance').val());
+				calculator.annualAppreciation = $('#appreciation-rate').val() / 100;
+				calculator.annualMaintenance = Number($('#annual-maintenance').val());
+				calculator.inflationRate = $('#inflation-rate').val() / 100;
+				calculator.marginalTaxRate = $('#tax-rate').val() / 100;
+				calculator.monthlyRent = Number($('#rent').val());
+				calculator.annualRentInflation = $('#rent-inflation').val() / 100;
+				calculator.investmentReturnRate = $('#investment-rate').val() / 100;
+				calculator.setup();
+				var monthsTillWorthOwning = calculator.monthsTillWorthOwning();
+				var adviceText;
+				if (monthsTillWorthOwning == -1) {
+					adviceText = "Based on what you entered, you are better off renting your home.";
+				} else {
+					var years = parseInt(monthsTillWorthOwning / 12);
+					var months = monthsTillWorthOwning % 12;
+					adviceText = "Based on what you entered, it is worth buying a home if you live there for at least " + years + " years and " + months + " months.";
+				}
+				$('#advice-text').text(adviceText);
+			}
+
+    		$('#input-form').validator().on('submit', function (event) {
+    			if (!event.isDefaultPrevented()) {
+    				calculate();
+    				$('#financial-variables').hide();
+    				$('#results-section').show();
+    				event.preventDefault();
+    			}
+    		});
+    		$('#show-form').click(function() {
+    			$('#financial-variables').show();
+    			$('#results-section').hide();
+    		});
+    	});
+        </script>
 	</body>
 </html>
