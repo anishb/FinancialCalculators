@@ -169,7 +169,12 @@
 				} else {
 					var years = parseInt(monthsTillWorthOwning / 12);
 					var months = monthsTillWorthOwning % 12;
-					adviceText = "It is worth buying your home if you live there for at least " + years + " years and " + months + " months.";
+					adviceText = "It is worth buying your home if you live there for at least " + years + " years";
+					if (months == 0) {
+						adviceText += ".";
+					} else {
+						adviceText += " and " + months + " months.";
+					}
 				}
 				$('#advice-text').text(adviceText);
 				renderChart();
@@ -181,7 +186,6 @@
 				var cashAfterSelling = [];
 				for (var year = 0; year <= calculator.mortgageTerm; year++) {
 					labels.push(year.toString());
-					
 					cashWhenRenting.push(Math.round(calculator.cashWhenRenting(year * 12)));
 					cashAfterSelling.push(Math.round(calculator.cashAfterSellingHome(year * 12)));
 				}
@@ -191,28 +195,62 @@
 					datasets: [
 						{
 							label: "Savings when renting",
-							fill: false,
+							fill: true,
 							borderColor: "rgba(75,192,192,1)",
+							backgroundColor: "rgba(75,192,192,0.4)",
+							pointBorderColor: "rgba(75,192,192,1)",
+							pointBackgroundColor: "#fff",
+							pointBorderWidth: 1,
+            				pointHoverRadius: 5,
+            				pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            				pointHoverBorderColor: "rgba(220,220,220,1)",
 							data: cashWhenRenting
 						},
 						{
 							label: "Savings after selling home",
+							fill: true,
 							borderColor: "rgba(255,205,86,1)",
-							fill: false,
+							backgroundColor: "rgba(255,205,86,0.4)",
+							pointBorderColor: "rgba(255,205,86,1)",
+            				pointBackgroundColor: "#fff",
+            				pointBorderWidth: 1,
+            				pointHoverRadius: 5,
+            				pointHoverBackgroundColor: "rgba(255,205,86,1)",
+            				pointHoverBorderColor: "rgba(255,205,86,1)",
 							data: cashAfterSelling
 						}
 					]
 				};
 				var options = {
+					responsive: true,
+					tooltips: {
+						callbacks: {
+                        	title: function(tooltipItems, data) {
+                        		return "Year " + tooltipItems[0].xLabel;
+                        	},
+							label: function(tooltipItem, data) {
+								return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel.toFinancial()
+							}
+						}
+					},
 					scales: {
             			yAxes: [{
+            				display: true,
                 			ticks: {
-                    			beginAtZero:false
+                    			beginAtZero:false,
+                    			userCallback: function(value, index, values) {
+                    				return value.toFinancial()
+                    			}
                 			}
             			}],
             			xAxes: [{
+            				display: true,
+            				scaleLabel: {
+            					display: true,
+            					labelString: 'Year'
+            				},
                 			ticks: {
-                    			beginAtZero:false
+                    			beginAtZero:true
                 			}
             			}]
         			}
@@ -224,6 +262,10 @@
     				options: options
 				});
 			}
+
+			Number.prototype.toFinancial = function() {
+				return "$" + this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			};
 
     		$('#input-form').validator().on('submit', function (event) {
     			if (!event.isDefaultPrevented()) {
