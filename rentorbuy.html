@@ -16,14 +16,14 @@
 					<label for="purchase-price">Purchase price: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" min="0" step="any" class="form-control" id="purchase-price" required>
+						<input type="number" min="0" step="any" class="form-control" id="purchase-price" value="500000" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="down-payment">Down Payment: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" min="0" step="any" class="form-control" id="down-payment" required>
+						<input type="number" min="0" step="any" class="form-control" id="down-payment" value="100000" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
@@ -52,14 +52,14 @@
 					<label for="monthly-hoa">Monthly HOA fees: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" min="0" step="any" class="form-control" id="monthly-hoa" required>
+						<input type="number" min="0" step="any" class="form-control" id="monthly-hoa" value="250" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="annual-insurance">Annual Insurance: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" min="0" step="any" class="form-control" id="annual-insurance" required>
+						<input type="number" min="0" step="any" class="form-control" id="annual-insurance" value="230" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
@@ -73,7 +73,7 @@
 					<label for="annual-maintenance">Annual maintenance: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" min="0" step="any" class="form-control" id="annual-maintenance" required>
+						<input type="number" min="0" step="any" class="form-control" id="annual-maintenance" value="300" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
@@ -94,7 +94,7 @@
 					<label for="rent">Monthly Rent: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
-						<input type="number" min="0" step="any" class="form-control" id="rent" required>
+						<input type="number" min="0" step="any" class="form-control" id="rent" value="1700"required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
@@ -121,15 +121,24 @@
 					<div class="jumbotron">
 						<p id="advice-text"></p>
 					</div>
-					<button class="btn btn-default" id="show-form">Options</button>
 				</div>
-			</row>
+				<div class="col-xs-12 col-sm-6">
+					<canvas id="chart" width="200" height="200"></canvas>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<h1>Some details here</h1>
+				</div>
+				<div class="col-xs-12">
+					<button class="btn btn-default" id="show-form">Edit Options</button>
+				</div>
+			</div>
 
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.1/Chart.js"></script>
 		<script src="js/lib/validator.min.js"></script>
 		<script src="js/src/FixedMortgageCalculator.js"></script>
 		<script src="js/src/RentOrBuyCalculator.js"></script>
@@ -156,13 +165,64 @@
 				var monthsTillWorthOwning = calculator.monthsTillWorthOwning();
 				var adviceText;
 				if (monthsTillWorthOwning == -1) {
-					adviceText = "Based on what you entered, you are better off renting your home.";
+					adviceText = "You are better off renting your home.";
 				} else {
 					var years = parseInt(monthsTillWorthOwning / 12);
 					var months = monthsTillWorthOwning % 12;
-					adviceText = "Based on what you entered, it is worth buying a home if you live there for at least " + years + " years and " + months + " months.";
+					adviceText = "It is worth buying your home if you live there for at least " + years + " years and " + months + " months.";
 				}
 				$('#advice-text').text(adviceText);
+				renderChart();
+			}
+
+			function renderChart() {
+				var labels = [];
+				var cashWhenRenting = [];
+				var cashAfterSelling = [];
+				for (var year = 0; year <= calculator.mortgageTerm; year++) {
+					labels.push(year.toString());
+					
+					cashWhenRenting.push(Math.round(calculator.cashWhenRenting(year * 12)));
+					cashAfterSelling.push(Math.round(calculator.cashAfterSellingHome(year * 12)));
+				}
+				
+				var data = {
+					labels: labels,
+					datasets: [
+						{
+							label: "Savings when renting",
+							fill: false,
+							borderColor: "rgba(75,192,192,1)",
+							data: cashWhenRenting
+						},
+						{
+							label: "Savings after selling home",
+							borderColor: "rgba(255,205,86,1)",
+							fill: false,
+							data: cashAfterSelling
+						}
+					]
+				};
+				var options = {
+					scales: {
+            			yAxes: [{
+                			ticks: {
+                    			beginAtZero:false
+                			}
+            			}],
+            			xAxes: [{
+                			ticks: {
+                    			beginAtZero:false
+                			}
+            			}]
+        			}
+        		};
+				var canvas = $("#chart");
+				var chart = new Chart(canvas, {
+    				type: 'line',
+    				data: data,
+    				options: options
+				});
 			}
 
     		$('#input-form').validator().on('submit', function (event) {
