@@ -145,6 +145,7 @@
 		<script>
 		$(document).ready(function() {
 			var calculator = new RentOrBuyCalculator();
+			var chart;
 
 			function calculate() {
 				calculator.purchasePrice = Number($('#purchase-price').val());
@@ -256,7 +257,10 @@
         			}
         		};
 				var canvas = $("#chart");
-				var chart = new Chart(canvas, {
+				if (chart != null) {
+					chart.destroy();
+				} 				
+				chart = new Chart(canvas, {
     				type: 'line',
     				data: data,
     				options: options
