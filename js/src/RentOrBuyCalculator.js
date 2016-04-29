@@ -7,7 +7,6 @@ function RentOrBuyCalculator() {
 	this.mortgageTerm;
 	this.propertyTaxRate = 0.0135;
 	this.monthlyHOAFees;
-	this.isHOATaxDeductible = false;
 	this.annualInsurance;
 	this.annualAppreciation = 0.02;
 	this.annualMaintenance;
@@ -55,9 +54,6 @@ function RentOrBuyCalculator() {
 
 	this.incomeTaxSavings = function(month) {
 		var deductible = mortgageCalculator.interestPayment(month) + that.propertyTax(month);
-		if (that.isHOATaxDeductible) {
-			deductible += that.hoaFees(month);
-		}
 		return deductible * that.marginalTaxRate;
 	};
 
