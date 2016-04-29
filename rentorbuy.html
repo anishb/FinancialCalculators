@@ -182,7 +182,7 @@
 				var monthsTillWorthOwning = calculator.monthsTillWorthOwning();
 				var adviceText;
 				if (monthsTillWorthOwning == -1) {
-					adviceText = "You are better off renting your home.";
+					adviceText = "You will save more money renting your home.";
 				} else {
 					var years = parseInt(monthsTillWorthOwning / 12);
 					var months = monthsTillWorthOwning % 12;
@@ -202,7 +202,7 @@
 				function rowForMonth(month, highlighted = false) {
 					var row;
 					if (highlighted) {
-						row = '<tr class="table-success"><th scope="row">';
+						row = '<tr class="success"><th scope="row">';
 					} else {
 						row = '<tr><th scope="row">';
 					}
