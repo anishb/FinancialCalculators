@@ -10,6 +10,13 @@
 
 	<body>
 		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<h1 class="text-center">Should I rent or buy my home?</h1>
+					<br />
+				</div>
+			</div>
+			
 			<div class="row" id="financial-variables">
 				<form role="form" data-toggle="validator" id="input-form">
 				<div class="form-group col-xs-12 col-sm-6">
@@ -117,16 +124,24 @@
 			</form>
 			</div>
 			<div class="row" id="results-section" style="display: none;">
-				<div class="col-xs-12">
-					<div class="jumbotron">
-						<p id="advice-text"></p>
-					</div>
-				</div>
 				<div class="col-xs-12 col-sm-6">
 					<canvas id="chart" width="200" height="200"></canvas>
 				</div>
 				<div class="col-xs-12 col-sm-6">
-					<h1>Some details here</h1>
+					<div class="jumbotron">
+						<h3 id="advice-text"></h3>
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Month</th>
+								<th>Savings when renting</th>
+								<th>Savings after selling home</th>
+							</tr>
+						</thead>
+						<tbody id="results-table-body">
+						</tbody>
+					</table>
 				</div>
 				<div class="col-xs-12">
 					<button class="btn btn-default" id="show-form">Edit Options</button>
@@ -179,6 +194,30 @@
 				}
 				$('#advice-text').text(adviceText);
 				renderChart();
+				renderDetails();
+			}
+
+			function renderDetails() {
+				function rowForMonth(month, highlighted = false) {
+					var row;
+					if (highlighted) {
+						row = '<tr class="table-success"><th scope="row">';
+					} else {
+						row = '<tr><th scope="row">';
+					}
+					row += month + "</th><td>" + calculator.cashWhenRenting(month).toFinancial()
+						+ "</td><td>" + calculator.cashAfterSellingHome(month).toFinancial()
+						+ "</td></tr>";
+					return row;
+				}
+				$('#results-table-body').empty();
+				$('#results-table-body').append(rowForMonth(0));
+				var monthsTillWorthOwning = calculator.monthsTillWorthOwning();
+				if (monthsTillWorthOwning > 0) {
+					$('#results-table-body').append(rowForMonth(monthsTillWorthOwning, true));
+				}
+				var finalMonth = calculator.mortgageTerm * 12;
+				$('#results-table-body').append(rowForMonth(finalMonth));
 			}
 
 			function renderChart() {
@@ -268,7 +307,7 @@
 			}
 
 			Number.prototype.toFinancial = function() {
-				return "$" + this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				return "$" + Math.round(this).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 			};
 
     		$('#input-form').validator().on('submit', function (event) {
