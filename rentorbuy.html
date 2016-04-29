@@ -80,13 +80,14 @@
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="monthly-hoa">Monthly HOA fees: </label>
+					<a href="#" class="tooltip-large" data-toggle="tooltip" title="If you purchase a condominium, townhouse, or other type of property in a planned development, you are generally obligated to pay monthly homeowners association fees for the upkeep of common areas.">(?)</a>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
 						<input type="number" min="0" step="any" class="form-control" id="monthly-hoa" value="250" required>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
-					<label for="annual-insurance">Annual Insurance: </label>
+					<label for="annual-insurance">Annual Homeowners Insurance: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
 						<input type="number" min="0" step="any" class="form-control" id="annual-insurance" value="230" required>
@@ -100,7 +101,7 @@
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
-					<label for="annual-maintenance">Annual maintenance: </label>
+					<label for="annual-maintenance">Annual Maintenance (not covered by HOA): </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
 						<input type="number" min="0" step="any" class="form-control" id="annual-maintenance" value="300" required>
@@ -115,13 +116,14 @@
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="tax-rate">Marginal Tax Rate: </label>
+					<a href="#" class="tooltip-large" data-toggle="tooltip" title="If you purchase your home, the property taxes and interest paid on your mortgage are tax deductible. In order to accurately calculate savings from tax deductions, enter the cumulative marginal federal and state tax rate on your annual household income.">(?)</a>
 					<div class="input-group">
 						<input type="number" min="0" step="any" class="form-control" id="tax-rate" value="28" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
-					<label for="rent">Monthly Rent: </label>
+					<label for="rent">Monthly Rent (for similar home): </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
 						<input type="number" min="0" step="any" class="form-control" id="rent" value="1700"required>
@@ -129,6 +131,7 @@
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="rent-inflation">Annual Rent Inflation: </label>
+					<a href="#" class="tooltip-large" data-toggle="tooltip" title="When renting your home, your monthly rent will generally increase on an annual basis.">(?)</a>
 					<div class="input-group">
 						<input type="number" min="0" step="any" class="form-control" id="rent-inflation" value="3" required>
 						<span class="input-group-addon">%</span>
@@ -136,13 +139,14 @@
 				</div>
 				<div class="form-group col-xs-12 col-sm-6">
 					<label for="investment-rate">Investment Return Rate (after taxes): </label>
+					<a href="#" class="tooltip-large" data-toggle="tooltip" title="This the expected annual rate of return on your savings if you invested it rather than purchased your home.">(?)</a>
 					<div class="input-group">
 						<input type="number" min="0" class="form-control" id="investment-rate" value="5" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
 				<div class="col-xs-1">
-					<input class="btn btn-default" type="submit" value="Calculate">
+					<input class="btn btn-default" type="submit" value="Compare">
 				</div>
 			</form>
 			</div>
@@ -318,6 +322,10 @@
     				event.preventDefault();
     			}
     		});
+
+    		$(".tooltip-large").tooltip({
+        		delay: {show: 0, hide: 1000}
+    		}); 
     	});
         </script>
 	</body>
