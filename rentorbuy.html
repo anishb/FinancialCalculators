@@ -16,7 +16,33 @@
 					<br />
 				</div>
 			</div>
-			
+
+			<!-- Show results of analysis -->
+			<div class="row" id="results-section" style="display: none;">
+				<div class="col-xs-12 col-sm-6">
+					<canvas id="chart" width="200" height="140"></canvas>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					<div class="jumbotron">
+						<h3 id="advice-text"></h3>
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Month</th>
+								<th>Savings when renting</th>
+								<th>Equity in home</th>
+								<th>Cash after selling home</th>
+							</tr>
+						</thead>
+						<tbody id="results-table-body">
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<br />
+
+			<!-- Form for financial inputs -->
 			<div class="row" id="financial-variables">
 				<form role="form" data-toggle="validator" id="input-form">
 				<div class="form-group col-xs-12 col-sm-6">
@@ -122,31 +148,6 @@
 					<input class="btn btn-default" type="submit" value="Calculate">
 				</div>
 			</form>
-			</div>
-			<div class="row" id="results-section" style="display: none;">
-				<div class="col-xs-12 col-sm-6">
-					<canvas id="chart" width="200" height="200"></canvas>
-				</div>
-				<div class="col-xs-12 col-sm-6">
-					<div class="jumbotron">
-						<h3 id="advice-text"></h3>
-					</div>
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Month</th>
-								<th>Savings when renting</th>
-								<th>Equity in home</th>
-								<th>Cash after selling home</th>
-							</tr>
-						</thead>
-						<tbody id="results-table-body">
-						</tbody>
-					</table>
-				</div>
-				<div class="col-xs-12">
-					<button class="btn btn-default" id="show-form">Edit Options</button>
-				</div>
 			</div>
 
 		</div>
@@ -314,15 +315,11 @@
 
     		$('#input-form').validator().on('submit', function (event) {
     			if (!event.isDefaultPrevented()) {
-    				calculate();
-    				$('#financial-variables').hide();
     				$('#results-section').show();
+    				calculate();
+    				window.scrollTo(0, 0);
     				event.preventDefault();
     			}
-    		});
-    		$('#show-form').click(function() {
-    			$('#financial-variables').show();
-    			$('#results-section').hide();
     		});
     	});
         </script>
