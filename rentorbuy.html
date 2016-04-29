@@ -136,6 +136,7 @@
 							<tr>
 								<th>Month</th>
 								<th>Savings when renting</th>
+								<th>Equity in home</th>
 								<th>Savings after selling home</th>
 							</tr>
 						</thead>
@@ -206,6 +207,7 @@
 						row = '<tr><th scope="row">';
 					}
 					row += month + "</th><td>" + calculator.cashWhenRenting(month).toFinancial()
+						+ "</td><td>" + calculator.equity(month).toFinancial()
 						+ "</td><td>" + calculator.cashAfterSellingHome(month).toFinancial()
 						+ "</td></tr>";
 					return row;
