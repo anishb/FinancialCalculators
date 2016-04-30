@@ -220,7 +220,7 @@
 			}
 
 			function renderDetails() {
-				function rowForMonth(month, highlighted = false) {
+				function rowForMonth(month, highlighted) {
 					var row;
 					if (highlighted) {
 						row = '<tr class="success"><th scope="row">';
@@ -240,7 +240,7 @@
 					$('#results-table-body').append(rowForMonth(monthsTillWorthOwning, true));
 				}
 				var finalMonth = calculator.mortgageTerm * 12;
-				$('#results-table-body').append(rowForMonth(finalMonth));
+				$('#results-table-body').append(rowForMonth(finalMonth, false));
 			}
 
 			function renderChart() {
