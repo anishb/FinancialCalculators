@@ -26,10 +26,10 @@
 
 			<!-- Show results of analysis -->
 			<div class="row" id="results-section" style="display: none;">
-				<div class="col-xs-12 col-sm-6">
+				<div class="col-xs-12 col-md-6">
 					<canvas id="chart" width="200" height="140"></canvas>
 				</div>
-				<div class="col-xs-12 col-sm-6">
+				<div class="col-xs-12 col-md-6">
 					<div class="jumbotron">
 						<h3 id="advice-text"></h3>
 					</div>
@@ -56,14 +56,14 @@
 			<!-- Form for financial inputs -->
 			<div class="row" id="financial-variables">
 				<form role="form" data-toggle="validator" id="input-form">
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="purchase-price">Purchase price: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
 						<input type="number" min="0" step="any" class="form-control" id="purchase-price"required>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="down-payment">Down Payment: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
@@ -71,14 +71,14 @@
 					</div>
 					<div class="help-block with-errors"></div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="mortgage-rate">Mortgage Interest Rate: </label>
 					<div class="input-group">
 						<input type="number" min="0" step="any" class="form-control" id="mortgage-rate" value="4.5" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="mortgage-term">Mortgage Term (years): </label>
 					<select class="form-control" id="mortgage-term">
     					<option value="15">15</option>
@@ -86,14 +86,14 @@
     					<option value="30" selected="selected">30</option>
 					</select>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="property-tax-rate">Property Tax Rate: </label>
 					<div class="input-group">
 						<input type="number" min="0" step="any" class="form-control" id="property-tax-rate" value="1.25" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="monthly-hoa">Monthly HOA fees: </label>
 					<a href="#" class="tooltip-large" data-toggle="tooltip" title="If you purchase a condominium, townhouse, or other type of property in a planned development, you are generally obligated to pay monthly homeowners association fees for the upkeep of common areas.">(?)</a>
 					<div class="input-group">
@@ -101,35 +101,35 @@
 						<input type="number" min="0" step="any" class="form-control" id="monthly-hoa" required>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="annual-insurance">Annual Homeowners Insurance: </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
 						<input type="number" min="0" step="any" class="form-control" id="annual-insurance"required>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="appreciation-rate">Estimated Annual Appreciation Rate: </label>
 					<div class="input-group">
 						<input type="number" min="0" step="any" class="form-control" id="appreciation-rate" value="1" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="annual-maintenance">Annual Maintenance (not covered by HOA): </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
 						<input type="number" min="0" step="any" class="form-control" id="annual-maintenance"required>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="inflation-rate">Annual Inflation Rate: </label>
 					<div class="input-group">
 						<input type="number" min="0" step="any" class="form-control" id="inflation-rate" value="2" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="tax-rate">Marginal Tax Rate: </label>
 					<a href="#" class="tooltip-large" data-toggle="tooltip" title="If you purchase your home, the property taxes and interest paid on your mortgage are tax deductible. In order to accurately calculate savings from tax deductions, enter the cumulative marginal federal and state tax rate on your annual household income.">(?)</a>
 					<div class="input-group">
@@ -137,14 +137,14 @@
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="rent">Monthly Rent (for similar home): </label>
 					<div class="input-group">
 						<span class="input-group-addon">$</span>
 						<input type="number" min="0" step="any" class="form-control" id="rent" required>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="rent-inflation">Annual Rent Inflation: </label>
 					<a href="#" class="tooltip-large" data-toggle="tooltip" title="When renting your home, your monthly rent will generally increase on an annual basis.">(?)</a>
 					<div class="input-group">
@@ -152,7 +152,7 @@
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
-				<div class="form-group col-xs-12 col-sm-6">
+				<div class="form-group col-xs-12 col-md-6">
 					<label for="investment-rate">Investment Return Rate (after taxes): </label>
 					<a href="#" class="tooltip-large" data-toggle="tooltip" title="This the expected annual rate of return on your savings if you invested it rather than purchased your home.">(?)</a>
 					<div class="input-group">
