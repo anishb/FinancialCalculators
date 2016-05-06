@@ -35,7 +35,7 @@ function FixedMortgageCalculator(amount, years, rate) {
 		if (month == 0) {
 			return amount;
 		}
-		if (balance[month]) {
+		if (balance[month] !== undefined) {
 			return balance[month];
 		}
 		balance[month] = that.balance(month - 1) - that.principalPayment(month);
@@ -46,7 +46,7 @@ function FixedMortgageCalculator(amount, years, rate) {
 		if (month == 0) {
 			return 0;
 		}
-		if (principalPayment[month]) {
+		if (principalPayment[month] !== undefined) {
 			return principalPayment[month];
 		}
 		principalPayment[month] = that.monthlyPayment() - that.interestPayment(month);
@@ -57,7 +57,7 @@ function FixedMortgageCalculator(amount, years, rate) {
 		if (month == 0) {
 			return 0;
 		}
-		if (interestPayment[month]) {
+		if (interestPayment[month] !== undefined) {
 			return interestPayment[month];
 		}	
 		interestPayment[month] = that.balance(month - 1) * that.monthlyInterest();

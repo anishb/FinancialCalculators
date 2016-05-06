@@ -336,7 +336,7 @@
 			$('#input-form').validator({
 				custom: {
 					lessthanpurchaseprice: function($el) {
-						return Number($el.val()) < Number($('#purchase-price').val());
+						return Number($el.val()) <= Number($('#purchase-price').val());
 					}
 				},
 				errors: {

@@ -80,7 +80,7 @@ function RentOrBuyCalculator() {
 		if (month == 0) {
 			return that.downPayment;
 		}
-		if (cashWhileRenting[month]) {
+		if (cashWhileRenting[month] !== undefined) {
 			return cashWhileRenting[month];
 		}
 		cashWhileRenting[month] = that.cashWhenRenting(month - 1) * (1 + that.investmentReturnRate / 12)
