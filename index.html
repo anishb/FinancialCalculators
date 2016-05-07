@@ -73,14 +73,14 @@
 					<div class="help-block with-errors"></div>
 				</div>
 				<div class="form-group col-xs-12 col-md-6">
-					<label for="mortgage-rate">Mortgage Interest Rate: </label>
+					<label for="mortgage-rate" id="mortgage-rate-label">Mortgage Interest Rate: </label>
 					<div class="input-group">
 						<input type="number" min="0" step="any" class="form-control" id="mortgage-rate" value="4.5" required>
 						<span class="input-group-addon">%</span>
 					</div>
 				</div>
 				<div class="form-group col-xs-12 col-md-6">
-					<label for="mortgage-term">Mortgage Term (years): </label>
+					<label for="mortgage-term" id="mortgage-term-label">Mortgage Term (years): </label>
 					<select class="form-control" id="mortgage-term">
     					<option value="15">15</option>
     					<option value="20">20</option>
@@ -343,6 +343,25 @@
 					lessthanpurchaseprice: 'Down payment must be less than purchase price.'
 				}
 			});
+
+			var mortgageAmountChanged = function(event) {
+				var purchasePrice = Number($("#purchase-price").val());
+				var downPayment = Number($("#down-payment").val());
+				if (purchasePrice - downPayment > 0) {
+					$("#mortgage-rate").prop('disabled', false);
+					$("#mortgage-term").prop('disabled', false);
+					$("#mortgage-rate-label").css('textDecoration','none');
+					$("#mortgage-term-label").css('textDecoration','none');
+				} else {
+					$("#mortgage-rate").prop('disabled', true);
+					$("#mortgage-term").prop('disabled', true);
+					$("#mortgage-rate-label").css('textDecoration','line-through');
+					$("#mortgage-term-label").css('textDecoration','line-through');
+				}
+			};
+
+			$('#purchase-price').change(mortgageAmountChanged);
+			$('#down-payment').change(mortgageAmountChanged);
 
     		$('#input-form').validator().on('submit', function (event) {
     			if (event.isDefaultPrevented()) {
