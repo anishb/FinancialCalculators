@@ -3,11 +3,19 @@ from decimal import *
 class InterestCalculator:
     """Compound interest calculator"""
 
-    def __init__(self, principal, rate):
+    def __init__(self, principal, rate, compounds_per_year='1', inflation_rate='0.02'):
+        """Initializes the compound interest calculator.
+
+        Keyword arguments:
+        principal -- The principal amount to begin with
+        rate -- The interest rate expressed as a decimal, e.g. '0.04'
+        compounds_per_year -- The number of times per year the interest is applied
+        inflation_rate -- The current rate of inflation as a decimal, e.g. '0.02'
+        """
         self.principal = principal
         self.nominal_rate = rate
-        self.compounds_per_year = '1'
-        self.inflation_rate = '0.02'
+        self.compounds_per_year = compounds_per_year
+        self.inflation_rate = inflation_rate
 
     @property
     def principal(self):
@@ -50,13 +58,16 @@ class InterestCalculator:
         self._inflation_rate = Decimal(value)
 
     def rate_per_compound(self):
+        """Calculates the interest rate per compound period."""
         return self.nominal_rate / self.compounds_per_year
 
     def amount_after_years(self, years):
+        """Calculates the balance after n number of years."""
         rate = Decimal('1') + self.rate_per_compound()
         return self.principal * rate ** (self.compounds_per_year * years)
 
     def real_amount_after_years(self, years):
+        """Calculates the balance after n number of years, adjusting for inflation."""
         return self.amount_after_years(years) / (Decimal('1') + self.inflation_rate) ** years
 
     def __iter__(self):
