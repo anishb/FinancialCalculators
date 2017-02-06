@@ -58,3 +58,13 @@ class InterestCalculator:
 
     def real_amount_after_years(self, years):
         return self.amount_after_years(years) / (Decimal('1') + self.inflation_rate) ** years
+
+    def __iter__(self):
+        self._years = 0
+        return self
+
+    def __next__(self):
+        nominal_amount = self.amount_after_years(self._years)
+        real_amount = self.real_amount_after_years(self._years)
+        self._years += 1
+        return (nominal_amount, real_amount)
